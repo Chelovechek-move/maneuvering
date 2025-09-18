@@ -1,2 +1,3 @@
-from typing import Tuple, Iterable, Sequence, List
+from collections.abc import Sequence
+
 Vector3 = Sequence[float]

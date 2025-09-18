@@ -1,6 +1,4 @@
-from typing import Tuple
-
-def solve_lambert(r1, r2, tof, mu) -> Tuple[float, float]:
+def solve_lambert(r1, r2, tof, mu) -> tuple[float, float]:
     """
     Заглушка: верните (dv1, dv2). Позже реализуете.
     r1, r2 — начальный и конечный радиус-векторы (любая коллекция из 3 чисел).

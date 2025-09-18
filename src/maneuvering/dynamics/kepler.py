@@ -1,5 +1,6 @@
 import math
 
+
 def mean_motion(mu: float, a: float) -> float:
     """
     Среднее движение n = sqrt(mu / a^3).
@@ -7,4 +8,4 @@ def mean_motion(mu: float, a: float) -> float:
     """
     if a <= 0:
         raise ValueError("Semi-major axis must be positive.")
-    return math.sqrt(mu / (a ** 3))
+    return math.sqrt(mu / (a**3))

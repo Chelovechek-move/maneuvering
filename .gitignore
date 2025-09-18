@@ -13,3 +13,6 @@ htmlcov/
 .idea/
 
 .DS_Store
+
+build/
+dist/
