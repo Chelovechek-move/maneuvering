@@ -74,3 +74,23 @@ class KeplerianEcc:
     """
     orb: Keplerian
     E: Scalar
+
+
+def keplerian(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar) -> Keplerian:
+    """Фабрика для базовых Кеплеровых элементов."""
+    return Keplerian(a=a, e=e, w=w, i=i, raan=raan)
+
+
+def kep_true(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar, nu: Scalar) -> KeplerianTrue:
+    """Фабрика для истинных Кеплеровых элементов"""
+    return KeplerianTrue(orb=Keplerian(a=a, e=e, w=w, i=i, raan=raan), nu=nu)
+
+
+def kep_mean(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar, M: Scalar) -> KeplerianMean:
+    """Фабрика для средних Кеплеровых элементов"""
+    return KeplerianMean(orb=Keplerian(a=a, e=e, w=w, i=i, raan=raan), M=M)
+
+
+def kep_ecc(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar, E: Scalar) -> KeplerianEcc:
+    """Фабрика для эксцентрических Кеплеровых элементов"""
+    return KeplerianEcc(orb=Keplerian(a=a, e=e, w=w, i=i, raan=raan), E=E)
