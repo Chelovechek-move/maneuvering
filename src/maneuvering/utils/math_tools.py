@@ -1,3 +1,20 @@
-def clamp(x: float, lo: float, hi: float) -> float:
-    """Ограничение значения x в диапазоне [lo, hi]."""
-    return max(lo, min(hi, x))
+import numpy as np
+from maneuvering.types import Vector3
+
+
+def normalize(v: Vector3) -> Vector3:
+    """
+    Нормирует вектор: возвращает v / ||v||.
+
+    Параметры
+    ----------
+    v : Vector3
+        Входной 3D-вектор (float64).
+
+    Возвращает
+    -------
+    Vector3
+        Вектор той же формы с единичной нормой.
+    """
+    n = float(np.linalg.norm(v))
+    return v / n
