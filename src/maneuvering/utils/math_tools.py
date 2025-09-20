@@ -1,4 +1,5 @@
 import numpy as np
+
 from maneuvering.types import Vector3
 
 

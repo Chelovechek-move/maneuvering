@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import numpy as np
 from dataclasses import dataclass
 
-from maneuvering.types import Vector3, ArrayF64
+import numpy as np
+
+from maneuvering.types import ArrayF64, Vector3
 from maneuvering.utils.math_tools import normalize
 
 

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import numpy as np
 
-from maneuvering.types import Scalar, Vector3
-from maneuvering.orbit.keplerian import Kep, KepTrue, kep_true
 from maneuvering.orbit.cartesian import Cart
+from maneuvering.orbit.keplerian import KepTrue, kep_true
+from maneuvering.types import Scalar, Vector3
 
 
 def convert_kep_true_to_cart(o: KepTrue, mu: Scalar) -> Cart:
@@ -48,19 +48,19 @@ def convert_kep_true_to_cart(o: KepTrue, mu: Scalar) -> Cart:
     r: Vector3 = np.array([x, y, z], dtype=np.float64)
 
     sqrt_mu_p = np.sqrt(mu / p)
-    cTruePlusEcc = cos_nu + e
+    cos_nu_p_e = cos_nu + e
     cos_w = np.cos(w)
     sin_w = np.sin(w)
 
     vx = (
-        sqrt_mu_p * cTruePlusEcc * (-sin_w * cos_raan - cos_i * sin_raan * cos_w)
+        sqrt_mu_p * cos_nu_p_e * (-sin_w * cos_raan - cos_i * sin_raan * cos_w)
         - sqrt_mu_p * sin_nu * (cos_w * cos_raan - cos_i * sin_raan * sin_w)
     )
     vy = (
-        sqrt_mu_p * cTruePlusEcc * (-sin_w * sin_raan + cos_i * cos_raan * cos_w)
+        sqrt_mu_p * cos_nu_p_e * (-sin_w * sin_raan + cos_i * cos_raan * cos_w)
         - sqrt_mu_p * sin_nu * (cos_w * sin_raan + cos_i * cos_raan * sin_w)
     )
-    vz = sqrt_mu_p * (cTruePlusEcc * sin_i * cos_w - sin_nu * sin_i * sin_w)
+    vz = sqrt_mu_p * (cos_nu_p_e * sin_i * cos_w - sin_nu * sin_i * sin_w)
 
     v: Vector3 = np.array([vx, vy, vz], dtype=np.float64)
 
@@ -86,15 +86,19 @@ def convert_cart_to_kep_true(o: Cart, mu: Scalar) -> KepTrue:
     r = o.r
     v = o.v
 
-    norm = lambda x: float(np.linalg.norm(x))
-    hat = lambda x: x / norm(x) if norm(x) > 0.0 else x  # единичный вектор, если ненулевой
-    dot = lambda a, b: float(np.dot(a, b))
+    def norm(x): return float(np.linalg.norm(x))
+
+    def hat(x):
+        n = norm(x)
+        return x / n if n > 0.0 else x  # единичный вектор, если ненулевой
+
+    def dot(a, b): return float(np.dot(a, b))
+
     cross = np.cross
     atan2 = np.arctan2
-    cos = np.cos
-    sin = np.sin
-    TWO_PI = 2.0 * np.pi
-    normalize_ang = lambda ang: (ang % TWO_PI + TWO_PI) % TWO_PI  # в [0, 2π)
+    two_pi = 2.0 * np.pi
+
+    def normalize_ang(ang): return (ang % two_pi + two_pi) % two_pi  # в [0, 2π)
 
     v2 = dot(v, v)
     r_norm = norm(r)
