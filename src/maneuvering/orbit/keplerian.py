@@ -4,7 +4,7 @@ from maneuvering.types import Scalar
 
 
 @dataclass(frozen=True, slots=True)
-class Keplerian:
+class Kep:
     """
     Кеплеровы элементы орбиты {a, e, w, i, raan}.
 
@@ -29,68 +29,68 @@ class Keplerian:
 
 
 @dataclass(frozen=True, slots=True)
-class KeplerianTrue:
+class KepTrue:
     """
     Истинные Кеплеровы элементы {a, e, w, i, raan, nu}.
 
     Атрибуты
     --------
-    orb : Keplerian
+    orb : Kep
         Кеплеровы элементы орбиты.
     nu : Scalar
         Истинная аномалия, [рад].
     """
-    orb: Keplerian
+    orb: Kep
     nu: Scalar
 
 
 @dataclass(frozen=True, slots=True)
-class KeplerianMean:
+class KepMean:
     """
     Средние Кеплеровы элементы {a, e, w, i, raan, M}.
 
     Атрибуты
     --------
-    orb : Keplerian
+    orb : Kep
         Кеплеровы элементы орбиты.
     M : Scalar
         Средняя аномалия, [рад].
     """
-    orb: Keplerian
+    orb: Kep
     M: Scalar
 
 
 @dataclass(frozen=True, slots=True)
-class KeplerianEcc:
+class KepEcc:
     """
     Эксцентрические Кеплеровы элементы {a, e, w, i, raan, Е}.
 
     Атрибуты
     --------
-    orb : Keplerian
+    orb : Kep
         Кеплеровы элементы орбиты.
     E : Scalar
         Эксцентрическая аномалия, [рад].
     """
-    orb: Keplerian
+    orb: Kep
     E: Scalar
 
 
-def keplerian(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar) -> Keplerian:
+def keplerian(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar) -> Kep:
     """Фабрика для базовых Кеплеровых элементов."""
-    return Keplerian(a=a, e=e, w=w, i=i, raan=raan)
+    return Kep(a=a, e=e, w=w, i=i, raan=raan)
 
 
-def kep_true(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar, nu: Scalar) -> KeplerianTrue:
+def kep_true(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar, nu: Scalar) -> KepTrue:
     """Фабрика для истинных Кеплеровых элементов"""
-    return KeplerianTrue(orb=Keplerian(a=a, e=e, w=w, i=i, raan=raan), nu=nu)
+    return KepTrue(orb=Kep(a=a, e=e, w=w, i=i, raan=raan), nu=nu)
 
 
-def kep_mean(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar, M: Scalar) -> KeplerianMean:
+def kep_mean(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar, M: Scalar) -> KepMean:
     """Фабрика для средних Кеплеровых элементов"""
-    return KeplerianMean(orb=Keplerian(a=a, e=e, w=w, i=i, raan=raan), M=M)
+    return KepMean(orb=Kep(a=a, e=e, w=w, i=i, raan=raan), M=M)
 
 
-def kep_ecc(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar, E: Scalar) -> KeplerianEcc:
+def kep_ecc(a: Scalar, e: Scalar, w: Scalar, i: Scalar, raan: Scalar, E: Scalar) -> KepEcc:
     """Фабрика для эксцентрических Кеплеровых элементов"""
-    return KeplerianEcc(orb=Keplerian(a=a, e=e, w=w, i=i, raan=raan), E=E)
+    return KepEcc(orb=Kep(a=a, e=e, w=w, i=i, raan=raan), E=E)
