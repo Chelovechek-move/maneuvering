@@ -21,6 +21,7 @@ class Kep:
     raan : Scalar
         Долгота восходящего узла, [рад].
     """
+
     a: Scalar
     e: Scalar
     w: Scalar
@@ -40,6 +41,7 @@ class KepTrue:
     nu : Scalar
         Истинная аномалия, [рад].
     """
+
     orb: Kep
     nu: Scalar
 
@@ -56,6 +58,7 @@ class KepMean:
     M : Scalar
         Средняя аномалия, [рад].
     """
+
     orb: Kep
     M: Scalar
 
@@ -72,6 +75,7 @@ class KepEcc:
     E : Scalar
         Эксцентрическая аномалия, [рад].
     """
+
     orb: Kep
     E: Scalar
 

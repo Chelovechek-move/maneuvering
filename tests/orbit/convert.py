@@ -146,66 +146,40 @@ def test_singular_cases():
     spd = math.sqrt(MU / a)
 
     # 1) i=0, w=0, raan=0, nu=0
-    _case(a, e, 0.0, 0.0, 0.0, 0.0,
-          np.array([a, 0.0, 0.0]),
-          np.array([0.0, spd, 0.0]))
+    _case(a, e, 0.0, 0.0, 0.0, 0.0, np.array([a, 0.0, 0.0]), np.array([0.0, spd, 0.0]))
 
     # 2) i=0, w=0, raan=0, nu=π/2
-    _case(a, e, 0.0, 0.0, 0.0, pi / 2,
-          np.array([0.0, a, 0.0]),
-          np.array([-spd, 0.0, 0.0]))
+    _case(a, e, 0.0, 0.0, 0.0, pi / 2, np.array([0.0, a, 0.0]), np.array([-spd, 0.0, 0.0]))
 
     # 3) i=0, w=0, raan=0, nu=π
-    _case(a, e, 0.0, 0.0, 0.0, pi,
-          np.array([-a, 0.0, 0.0]),
-          np.array([0.0, -spd, 0.0]))
+    _case(a, e, 0.0, 0.0, 0.0, pi, np.array([-a, 0.0, 0.0]), np.array([0.0, -spd, 0.0]))
 
     # 4) i=0, w=0, raan=0, nu=3π/2
-    _case(a, e, 0.0, 0.0, 0.0, 3 * pi / 2,
-          np.array([0.0, -a, 0.0]),
-          np.array([spd, 0.0, 0.0]))
+    _case(a, e, 0.0, 0.0, 0.0, 3 * pi / 2, np.array([0.0, -a, 0.0]), np.array([spd, 0.0, 0.0]))
 
     # 5) i=π (ретроградная), w=0, raan=0, nu=0
-    _case(a, e, pi, 0.0, 0.0, 0.0,
-          np.array([a, 0.0, 0.0]),
-          np.array([0.0, -spd, 0.0]))
+    _case(a, e, pi, 0.0, 0.0, 0.0, np.array([a, 0.0, 0.0]), np.array([0.0, -spd, 0.0]))
 
     # 6) i=π, w=0, raan=0, nu=π/2
-    _case(a, e, pi, 0.0, 0.0, pi / 2,
-          np.array([0.0, -a, 0.0]),
-          np.array([-spd, 0.0, 0.0]))
+    _case(a, e, pi, 0.0, 0.0, pi / 2, np.array([0.0, -a, 0.0]), np.array([-spd, 0.0, 0.0]))
 
     # 7) i=π, w=0, raan=0, nu=π
-    _case(a, e, pi, 0.0, 0.0, pi,
-          np.array([-a, 0.0, 0.0]),
-          np.array([0.0, spd, 0.0]))
+    _case(a, e, pi, 0.0, 0.0, pi, np.array([-a, 0.0, 0.0]), np.array([0.0, spd, 0.0]))
 
     # 8) i=π, w=0, raan=0, nu=3π/2
-    _case(a, e, pi, 0.0, 0.0, 3 * pi / 2,
-          np.array([0.0, a, 0.0]),
-          np.array([spd, 0.0, 0.0]))
+    _case(a, e, pi, 0.0, 0.0, 3 * pi / 2, np.array([0.0, a, 0.0]), np.array([spd, 0.0, 0.0]))
 
     # 9) i=π/2 (полярная), w=0, raan=0, nu=0
-    _case(a, e, pi / 2, 0.0, 0.0, 0.0,
-          np.array([a, 0.0, 0.0]),
-          np.array([0.0, 0.0, spd]))
+    _case(a, e, pi / 2, 0.0, 0.0, 0.0, np.array([a, 0.0, 0.0]), np.array([0.0, 0.0, spd]))
 
     # 10) i=π/2, w=0, raan=0, nu=π/2
-    _case(a, e, pi / 2, 0.0, 0.0, pi / 2,
-          np.array([0.0, 0.0, a]),
-          np.array([-spd, 0.0, 0.0]))
+    _case(a, e, pi / 2, 0.0, 0.0, pi / 2, np.array([0.0, 0.0, a]), np.array([-spd, 0.0, 0.0]))
 
     # 11) i=π/2, w=0, raan=0, nu=π
-    _case(a, e, pi / 2, 0.0, 0.0, pi,
-          np.array([-a, 0.0, 0.0]),
-          np.array([0.0, 0.0, -spd]))
+    _case(a, e, pi / 2, 0.0, 0.0, pi, np.array([-a, 0.0, 0.0]), np.array([0.0, 0.0, -spd]))
 
     # 12) i=π/2, w=0, raan=π, nu=0
-    _case(a, e, pi / 2, 0.0, pi, 0.0,
-          np.array([-a, 0.0, 0.0]),
-          np.array([0.0, 0.0, spd]))
+    _case(a, e, pi / 2, 0.0, pi, 0.0, np.array([-a, 0.0, 0.0]), np.array([0.0, 0.0, spd]))
 
     # 13) i=π/2, w=π/2, raan=π, nu=π/2
-    _case(a, e, pi / 2, pi / 2, pi, pi / 2,
-          np.array([a, 0.0, 0.0]),
-          np.array([0.0, 0.0, -spd]))
+    _case(a, e, pi / 2, pi / 2, pi, pi / 2, np.array([a, 0.0, 0.0]), np.array([0.0, 0.0, -spd]))

@@ -22,6 +22,7 @@ class OrbitalSystem:
     n : Vector3
         Единичный вектор, сонаправленный орбитальному моменту: `n ∝ r × v`.
     """
+
     r: Vector3
     t: Vector3
     n: Vector3

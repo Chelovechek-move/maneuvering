@@ -15,6 +15,7 @@ class Maneuver:
     angle : Scalar
          Угол приложения манёвра относительно некоторой точки, [рад].
     """
+
     dv: Vector3
     angle: Scalar
 
@@ -31,5 +32,6 @@ class ManeuverT:
     t : Scalar
          Время приложения манёвра относительно некоторого момента, [сек].
     """
+
     dv: Vector3
     t: Scalar
