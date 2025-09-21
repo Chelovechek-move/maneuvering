@@ -23,24 +23,17 @@ def convert_kep_true_to_cart(o: KepTrue, mu: Scalar) -> Cart:
     Cart
         {r [м], v [м/с]}.
     """
-    a = o.orb.a
-    e = o.orb.e
-    w = o.orb.w
-    i = o.orb.i
-    raan = o.orb.raan
-    nu = o.nu
+    p = o.a * (1.0 - o.e * o.e)
+    r_mag = p / (1.0 + o.e * np.cos(o.nu))
 
-    p = a * (1.0 - e * e)
-    r_mag = p / (1.0 + e * np.cos(nu))
-
-    cos_u = np.cos(w + nu)
-    sin_u = np.sin(w + nu)
-    cos_i = np.cos(i)
-    sin_i = np.sin(i)
-    cos_raan = np.cos(raan)
-    sin_raan = np.sin(raan)
-    cos_nu = np.cos(nu)
-    sin_nu = np.sin(nu)
+    cos_u = np.cos(o.w + o.nu)
+    sin_u = np.sin(o.w + o.nu)
+    cos_i = np.cos(o.i)
+    sin_i = np.sin(o.i)
+    cos_raan = np.cos(o.raan)
+    sin_raan = np.sin(o.raan)
+    cos_nu = np.cos(o.nu)
+    sin_nu = np.sin(o.nu)
 
     x = (cos_u * cos_raan - cos_i * sin_u * sin_raan) * r_mag
     y = (cos_u * sin_raan + cos_i * sin_u * cos_raan) * r_mag
@@ -48,9 +41,9 @@ def convert_kep_true_to_cart(o: KepTrue, mu: Scalar) -> Cart:
     r: Vector3 = np.array([x, y, z], dtype=np.float64)
 
     sqrt_mu_p = np.sqrt(mu / p)
-    cos_nu_p_e = cos_nu + e
-    cos_w = np.cos(w)
-    sin_w = np.sin(w)
+    cos_nu_p_e = cos_nu + o.e
+    cos_w = np.cos(o.w)
+    sin_w = np.sin(o.w)
 
     vx = sqrt_mu_p * cos_nu_p_e * (
         -sin_w * cos_raan - cos_i * sin_raan * cos_w

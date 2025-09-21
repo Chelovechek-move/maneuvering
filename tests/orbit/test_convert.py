@@ -61,13 +61,13 @@ def test_convert_kepler_true_cart():
                             k_new = convert_cart_to_kep_true(cart, MU)
 
                             # Скалярные параметры
-                            assert math.isclose(k_new.orb.a, a, rel_tol=RTOL, abs_tol=ATOL)
-                            assert math.isclose(k_new.orb.e, e, rel_tol=RTOL, abs_tol=ATOL)
-                            assert math.isclose(k_new.orb.i, inc, rel_tol=RTOL, abs_tol=ATOL)
+                            assert math.isclose(k_new.a, a, rel_tol=RTOL, abs_tol=ATOL)
+                            assert math.isclose(k_new.e, e, rel_tol=RTOL, abs_tol=ATOL)
+                            assert math.isclose(k_new.i, inc, rel_tol=RTOL, abs_tol=ATOL)
 
                             # Углы: сравниваем с учётом эквивалентности по 2π
-                            assert _is_ang_close(k_new.orb.w, w)
-                            assert _is_ang_close(k_new.orb.raan, raan)
+                            assert _is_ang_close(k_new.w, w)
+                            assert _is_ang_close(k_new.raan, raan)
                             assert _is_ang_close(k_new.nu, nu)
 
 
@@ -91,11 +91,11 @@ def test_convert_random_samples(seed: int = 123):
         cart = convert_kep_true_to_cart(k_old, MU)
         kt2 = convert_cart_to_kep_true(cart, MU)
 
-        assert math.isclose(kt2.orb.a, a, rel_tol=RTOL, abs_tol=ATOL)
-        assert math.isclose(kt2.orb.e, e, rel_tol=RTOL, abs_tol=ATOL)
-        assert math.isclose(kt2.orb.i, inc, rel_tol=RTOL, abs_tol=ATOL)
-        assert _is_ang_close(kt2.orb.w, w)
-        assert _is_ang_close(kt2.orb.raan, raan)
+        assert math.isclose(kt2.a, a, rel_tol=RTOL, abs_tol=ATOL)
+        assert math.isclose(kt2.e, e, rel_tol=RTOL, abs_tol=ATOL)
+        assert math.isclose(kt2.i, inc, rel_tol=RTOL, abs_tol=ATOL)
+        assert _is_ang_close(kt2.w, w)
+        assert _is_ang_close(kt2.raan, raan)
         assert _is_ang_close(kt2.nu, nu)
 
 
