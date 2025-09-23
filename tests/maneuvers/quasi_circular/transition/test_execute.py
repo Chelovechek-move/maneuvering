@@ -1,4 +1,5 @@
 import math
+
 import numpy as np
 
 from maneuvering.maneuvers.maneuver import Maneuver
@@ -7,6 +8,7 @@ from maneuvering.orbit.keplerian import KepTrue
 
 TWO_PI = 2.0 * math.pi
 mu = 3.9860044158e14  # [м^3/с^2]
+
 
 def test_execute_no_maneuvers():
     """Если манёвров нет, орбита не меняется."""

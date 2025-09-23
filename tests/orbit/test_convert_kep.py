@@ -1,17 +1,18 @@
 import math
+
 import numpy as np
 import pytest
 
-from maneuvering.utils.math_tools import normalize_angle
 from maneuvering.orbit.convert_kep import (
-    calc_mean_from_eccentric,
-    calc_eccentric_from_true,
     calc_eccentric_from_mean,
+    calc_eccentric_from_true,
+    calc_mean_from_eccentric,
+    calc_mean_from_true,
     calc_true_from_eccentric,
     calc_true_from_mean,
-    calc_mean_from_true,
     calc_true_from_mean_non_norm,
 )
+from maneuvering.utils.math_tools import normalize_angle
 
 TWO_PI = 2.0 * math.pi
 EPS = np.finfo(float).eps
@@ -30,7 +31,10 @@ def ang_diff(a, b):
 # ГРАНИЧНЫЕ СЛУЧАИ e=0
 # ----------------------
 
-@pytest.mark.parametrize("x", [0.0, 1e-12, 1e-9, 0.1, 1.0, math.pi - 1e-12, math.pi, 2 * math.pi - 1e-12])
+
+@pytest.mark.parametrize(
+    "x", [0.0, 1e-12, 1e-9, 0.1, 1.0, math.pi - 1e-12, math.pi, 2 * math.pi - 1e-12]
+)
 def test_circular_orbit_identities(x):
     """При e=0: ν == E == M (с точностью нормализации)."""
     e = 0.0
@@ -57,6 +61,7 @@ def test_circular_orbit_identities(x):
 # ---------------------------------------
 # СЕТКИ ДЛЯ ЭЛЛИПТИЧЕСКОГО СЛУЧАЯ (e < 1)
 # ---------------------------------------
+
 
 @pytest.mark.parametrize("e", [0.001, 0.05, 0.2, 0.5, 0.9])
 @pytest.mark.parametrize("nu", np.linspace(0.0, 2 * math.pi, 25, endpoint=False))
@@ -98,6 +103,7 @@ def test_mean_true_elliptic(e, M):
 # -----------------------------
 # НЕНОРМАЛИЗОВАННЫЙ ВАРИАНТ M->ν
 # -----------------------------
+
 
 @pytest.mark.parametrize("e", [0.0, 0.1, 0.7, 0.9])
 @pytest.mark.parametrize("k", [-3, -1, 0, 1, 2, 5])

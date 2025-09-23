@@ -1,9 +1,11 @@
 import math
+
 import numpy as np
-from maneuvering.types import Scalar
+
+from maneuvering.orbit.convert_kep import calc_mean_from_true, calc_true_from_mean
 from maneuvering.orbit.keplerian import KepMean, KepTrue
 from maneuvering.orbit.utils import mean_motion
-from maneuvering.orbit.convert_kep import calc_mean_from_true, calc_true_from_mean
+from maneuvering.types import Scalar
 
 
 def propagate_mean_anomaly(M: Scalar, a: Scalar, dt: Scalar, mu: Scalar) -> Scalar:

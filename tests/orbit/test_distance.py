@@ -1,8 +1,7 @@
 import math
-import pytest
 
-from maneuvering.orbit.keplerian import Kep
 from maneuvering.orbit.distance import distance_orbit
+from maneuvering.orbit.keplerian import Kep
 
 DEG = math.pi / 180.0
 tol = 1e-12

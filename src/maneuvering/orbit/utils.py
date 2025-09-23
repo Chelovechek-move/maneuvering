@@ -1,5 +1,6 @@
 import math
-from maneuvering.types import Scalar, Vector3
+
+from maneuvering.types import Scalar
 
 
 def mean_motion(a: Scalar, mu: Scalar) -> Scalar:

@@ -1,16 +1,17 @@
 import math
+
 import numpy as np
 
-from maneuvering.orbit.keplerian import KepMean, KepTrue
 from maneuvering.orbit.convert_kep import (
     calc_mean_from_true,
     calc_true_from_mean,
 )
+from maneuvering.orbit.keplerian import KepMean, KepTrue
 from maneuvering.orbit.propagate import (
-    propagate_mean_anomaly,
     propagate_mean,
-    propagate_true_anomaly,
+    propagate_mean_anomaly,
     propagate_true,
+    propagate_true_anomaly,
 )
 from maneuvering.orbit.utils import mean_motion, period
 
@@ -120,7 +121,6 @@ def test_circular_orbit_e0_true_equals_mean_everywhere():
     """
     a = 7200e3
     e = 0.0
-    n = mean_motion(a, mu)
 
     for M0 in np.linspace(0.0, TWO_PI, 7, endpoint=False):
         nu0 = M0  # e=0 → ν==M

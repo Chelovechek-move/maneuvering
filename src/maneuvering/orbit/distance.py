@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import math
+
 import numpy as np
 
-from maneuvering.types import Scalar, Vector3
 from maneuvering.orbit.keplerian import Kep
+from maneuvering.types import Scalar, Vector3
 
 
 def _calc_P(o: Kep) -> Vector3:
@@ -114,11 +115,8 @@ def distance_orbit(o1: Kep, o2: Kep) -> Scalar:
     S1S2 = float(np.dot(S1, S2))
 
     W0 = (
-             2.0 * (alpha1 + alpha2)
-             + alpha1 * sqr(o1.e)
-             + alpha2 * sqr(o2.e)
-             - 4.0 * P1P2 * o1.e * o2.e
-         ) / 4.0
+        2.0 * (alpha1 + alpha2) + alpha1 * sqr(o1.e) + alpha2 * sqr(o2.e) - 4.0 * P1P2 * o1.e * o2.e
+    ) / 4.0
     W5 = -P1P2 / 2.0
     W6 = -P1S2 / 2.0
     W7 = -P2S1 / 2.0

@@ -1,9 +1,8 @@
-from maneuvering.types import Scalar, Vector3
-
 from maneuvering.orbit.cartesian import Cart
-from maneuvering.orbit.keplerian import KepTrue
 from maneuvering.orbit.convert_kep_cart import convert_cart_to_kep_true, convert_kep_true_to_cart
+from maneuvering.orbit.keplerian import KepTrue
 from maneuvering.orbit.orbital_system import calc_orb_sys, rot_mat_orb_to_eci
+from maneuvering.types import Scalar, Vector3
 
 
 def apply_impulse_eci(o: KepTrue, imp_eci: Vector3, mu: Scalar) -> KepTrue:

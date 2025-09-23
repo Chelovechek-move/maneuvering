@@ -41,6 +41,7 @@ class KepTrue(Kep):
     nu : Scalar
         Истинная аномалия, [рад].
     """
+
     nu: Scalar
 
 
@@ -56,6 +57,7 @@ class KepMean(Kep):
     M : Scalar
         Средняя аномалия, [рад].
     """
+
     M: Scalar
 
 
@@ -71,6 +73,7 @@ class KepEcc(Kep):
     E : Scalar
         Эксцентрическая аномалия, [рад].
     """
+
     E: Scalar
 
 

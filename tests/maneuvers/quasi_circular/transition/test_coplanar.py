@@ -1,11 +1,12 @@
 import math
+
 import numpy as np
 
+from maneuvering.maneuvers.quasi_circular.reference_orbit import reference_orbit
 from maneuvering.maneuvers.quasi_circular.transition.coplanar import coplanar_analytical
-from maneuvering.orbit.keplerian import Kep, KepTrue
 from maneuvering.maneuvers.quasi_circular.transition.execute import execute
 from maneuvering.orbit.distance import distance_orbit
-from maneuvering.maneuvers.quasi_circular.reference_orbit import reference_orbit
+from maneuvering.orbit.keplerian import Kep, KepTrue
 
 DEG = math.pi / 180.0
 mu = 3.9860044158e14  # [м^3/с^2]
@@ -14,6 +15,7 @@ tol = np.finfo(float).eps * 100.0
 # ----------------------------------------------------------------------------------------------------------------------
 # Тест из книжки Баранова
 # ----------------------------------------------------------------------------------------------------------------------
+
 
 def test_baranov_example():
     """Пример из Баранова: проверяем два ΔV."""
@@ -38,6 +40,7 @@ def test_baranov_example():
 # Тест на совпадающие орбиты
 # ----------------------------------------------------------------------------------------------------------------------
 
+
 def test_no_maneuvers():
     """Совпадающие орбиты → манёвров нет."""
     oi = Kep(a=7_000_000.0, e=0.00228, w=20 * DEG, i=0.0, raan=0.0)
@@ -50,6 +53,7 @@ def test_no_maneuvers():
 # ----------------------------------------------------------------------------------------------------------------------
 # Сравнение захардкоженных значений на каждый из алгоритмов маневрирования
 # ----------------------------------------------------------------------------------------------------------------------
+
 
 def test_non_intersecting_case():
     """Непересекающиеся орбиты: проверяем углы, компоненты импульсов и суммарный ΔV."""
@@ -150,10 +154,10 @@ def _calc_total_dv(mans) -> float:
 
 def _check(da_min: int, da_max: int, step: int, error_tol: float) -> None:
     """
-      - генерим пары орбит с Δa в заданном диапазоне,
-      - строим манёвры coplanar_analytical,
-      - прогоняем execute,
-      - сверяем метрику distance(final, target) и суммарный ΔV.
+    - генерим пары орбит с Δa в заданном диапазоне,
+    - строим манёвры coplanar_analytical,
+    - прогоняем execute,
+    - сверяем метрику distance(final, target) и суммарный ΔV.
     """
     for i in range(da_min, da_max + 1, step):
         ai = 6800e3

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+
 import numpy as np
 
-from maneuvering.types import Scalar
 from maneuvering.orbit.keplerian import Kep
+from maneuvering.types import Scalar
 
 
 @dataclass(frozen=True, slots=True)
@@ -19,6 +20,7 @@ class RefOrbit:
     v : Scalar
         Круговая скорость: v = sqrt(μ / r), [м/с].
     """
+
     r: Scalar
     v: Scalar
 
@@ -41,6 +43,7 @@ class TransDevs:
     i : Scalar
         Ориентированный угол между плоскостями орбит, [рад].
     """
+
     ex: Scalar
     ey: Scalar
     e: Scalar
@@ -119,10 +122,9 @@ def trans_devs(oi: Kep, ot: Kep) -> TransDevs:
     d_a = (ot.a - oi.a) / a_ref
 
     d_raan = ot.raan - oi.raan
-    cos_phi = (
-        float(np.cos(ot.i)) * float(np.cos(oi.i))
-        + float(np.sin(ot.i)) * float(np.sin(oi.i)) * float(np.cos(d_raan))
-    )
+    cos_phi = float(np.cos(ot.i)) * float(np.cos(oi.i)) + float(np.sin(ot.i)) * float(
+        np.sin(oi.i)
+    ) * float(np.cos(d_raan))
 
     # Численно-устойчивый arccosN: зажимаем аргумент в [-1, 1]
     cos_phi = float(np.clip(cos_phi, -1.0, 1.0))

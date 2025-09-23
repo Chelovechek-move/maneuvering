@@ -1,19 +1,17 @@
 from __future__ import annotations
 
 import math
-from typing import List, Tuple
 
 import numpy as np
 
-from maneuvering.types import Scalar, Vector3
-from maneuvering.utils.math_tools import normalize_angle
-from maneuvering.orbit.keplerian import KepTrue
-from maneuvering.orbit.convert_kep_cart import convert_kep_true_to_cart
-from maneuvering.maneuvers.maneuver import Maneuver
 from maneuvering.maneuvers.apply_impulse import apply_impulse_orb
+from maneuvering.maneuvers.maneuver import Maneuver
+from maneuvering.orbit.keplerian import KepTrue
+from maneuvering.types import Scalar
+from maneuvering.utils.math_tools import normalize_angle
 
 
-def execute(oi: KepTrue, maneuvers: List[Maneuver], mu: Scalar) -> KepTrue:
+def execute(oi: KepTrue, maneuvers: list[Maneuver], mu: Scalar) -> KepTrue:
     """
     Применяет последовательность манёвров и возвращает финальную орбиту.
 
@@ -46,7 +44,9 @@ def execute(oi: KepTrue, maneuvers: List[Maneuver], mu: Scalar) -> KepTrue:
 
     for m in maneuvers:
         du = (m.angle - u_cur) % (2.0 * math.pi)
-        cur = KepTrue(a=cur.a, e=cur.e, w=cur.w, i=cur.i, raan=cur.raan, nu=normalize_angle(cur.nu + du))
+        cur = KepTrue(
+            a=cur.a, e=cur.e, w=cur.w, i=cur.i, raan=cur.raan, nu=normalize_angle(cur.nu + du)
+        )
         cur = apply_impulse_orb(cur, np.asarray(m.dv, dtype=np.float64), mu)
         u_cur = normalize_angle(cur.w + cur.nu)
 

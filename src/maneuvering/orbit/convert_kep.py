@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import math
-import numpy as np
 
 from maneuvering.types import Scalar
 from maneuvering.utils.math_tools import normalize_angle
@@ -50,8 +49,9 @@ def calc_eccentric_from_true(nu: Scalar, e: Scalar) -> Scalar:
     return E if E >= 0.0 else (E + 2.0 * math.pi)
 
 
-def calc_eccentric_from_mean(M: Scalar, e: Scalar, max_newton_iter: int = 150,
-                             tol: Scalar = np.finfo(float).eps * 100.0) -> Scalar:
+def calc_eccentric_from_mean(
+    M: Scalar, e: Scalar, max_newton_iter: int = 150, tol: Scalar = 2.220446049250313e-14
+) -> Scalar:
     """
     Рассчитывает эксцентрическую аномалию из средней (решение уравнения Кеплера методом Ньютона).
 
@@ -105,7 +105,9 @@ def calc_true_from_eccentric(E: Scalar, e: Scalar) -> Scalar:
     return nu if nu >= 0.0 else (nu + 2.0 * math.pi)
 
 
-def calc_true_from_mean(M: Scalar, e: Scalar, max_iter: int = 150, tol: Scalar = np.finfo(float).eps * 100.0) -> Scalar:
+def calc_true_from_mean(
+    M: Scalar, e: Scalar, max_iter: int = 150, tol: Scalar = 2.220446049250313e-14
+) -> Scalar:
     """
     Рассчитывает истинную аномалию из средней: M → E → ν.
 
@@ -149,8 +151,9 @@ def calc_mean_from_true(nu: Scalar, e: Scalar) -> Scalar:
     return normalize_angle(calc_mean_from_eccentric(E, e))
 
 
-def calc_true_from_mean_non_norm(M: Scalar, e: Scalar, max_iter: int = 150,
-                                 tol: Scalar = np.finfo(float).eps * 100.0) -> Scalar:
+def calc_true_from_mean_non_norm(
+    M: Scalar, e: Scalar, max_iter: int = 150, tol: Scalar = 2.220446049250313e-14
+) -> Scalar:
     """
     Рассчитывает истинную аномалию из средней без нормализации.
 
