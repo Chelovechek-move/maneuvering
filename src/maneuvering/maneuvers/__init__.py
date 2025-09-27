@@ -1,3 +1,3 @@
-from .quasi_circular.transition.execute import execute
+from .quasi_circular.transition.execute import execute, execute_batch
 
-__all__ = ["execute"]
+__all__ = ["execute", "execute_batch"]
