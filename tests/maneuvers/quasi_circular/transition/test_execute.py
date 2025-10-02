@@ -54,7 +54,7 @@ def test_execute_batch_no_maneuvers():
     a = 7000e3
     step = np.deg2rad(3)
     o0 = KepTrue(a=a, e=0.0, w=0.0, i=0.0, raan=0.0, nu=1.234)
-    batch = execute_batch(o0, maneuvers=[], step=step, mu=mu)
+    batch, _ = execute_batch(o0, maneuvers=[], mu=mu, step=step)
 
     assert len(batch) == 1
     o1 = batch[0]
@@ -73,7 +73,7 @@ def test_execute_comparison():
     o0 = KepTrue(a=a, e=0.0, w=0.0, i=0.0, raan=0.0, nu=0.0)
     m1 = Maneuver(dv=np.array([0.1, 1, 0.1], dtype=np.float64), angle=0.1)
     m2 = Maneuver(dv=np.array([0.1, 1, 0.1], dtype=np.float64), angle=0.2)
-    batch = execute_batch(o0, maneuvers=[m1, m2], step=step, mu=mu)
+    batch, _ = execute_batch(o0, maneuvers=[m1, m2], mu=mu, step=step)
     of1 = batch[-1]
 
     of2 = execute(o0, maneuvers=[m1, m2], mu=mu)
