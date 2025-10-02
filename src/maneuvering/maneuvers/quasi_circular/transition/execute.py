@@ -57,9 +57,9 @@ def execute(oi: KepTrue, maneuvers: list[Maneuver], mu: Scalar) -> KepTrue:
 def execute_batch(
     oi: KepTrue,
     maneuvers: list[Maneuver],
-    step: Scalar,
     mu: Scalar,
-) -> list[KepTrue]:
+    step: Scalar = np.deg2rad(0.5),
+) -> tuple[list[KepTrue], list[float]]:
     """
     Исполняет последовательность манёвров и возвращает требуемые промежуточные состояния.
 
@@ -77,16 +77,20 @@ def execute_batch(
         Список манёвров. Для каждого m:
           - m.angle — истинная широта u = w + nu, [рад];
           - m.dv    — импульс Δv в орбитальной СК {r, t, n}, [м/с].
-    step : Scalar
-        Шаг по истинной широте u (рад), > 0.
     mu : Scalar
         Гравитационный параметр [м^3/с^2].
+    step : Scalar
+        Шаг по истинной широте u (рад), > 0.
 
     Returns
     -------
     list[KepTrue]
-        Список состояний (копии): стартовое, все промежуточные шаги,
+        - Список состояний (копии): стартовое, все промежуточные шаги,
         состояния ровно в точках манёвров (до и после импульса), и финальное после последнего манёвра.
+        - Cписок абсолютных углов (накопленный пройденный угол), соответствующий каждому состоянию.
+        Абсолютный угол считается от старта (0) и увеличивается только при реальном
+        продвижении по истинной широте u = w + nu вперёд; записи «после импульса»
+        получают тот же угол, что и «до импульса» (подскока нет).
 
     Notes
     -----
@@ -105,29 +109,33 @@ def execute_batch(
 
     cur = replace(oi)
     out: list[KepTrue] = [cur]  # стартовая точка
+    abs_angles: list[float] = [0.0]  # абсолютный угол к каждому состоянию
     u_cur = u(cur)
 
     i = 0
     while i < len(maneuvers):
         m = maneuvers[i]
-        du_to_m = (m.angle - u_cur) % two_pi
+        du_to_m = (m.angle - u_cur) % two_pi  # ∈ [0, 2π)
 
         if du_to_m <= step:
             # Подскок ровно до манёвра (если не уже там)
             if du_to_m > 0.0:
                 cur = advance_by_du(cur, du_to_m)
-                out.append(cur)  # состояние ДО импульса в точке манёвра
+                out.append(cur)  # состояние ДО импульса
+                abs_angles.append(abs_angles[-1] + du_to_m)
 
-            # Применяем импульс в орбитальной СК
+            # Применяем импульс (угол не меняется)
             cur = apply_impulse_orb(cur, m.dv, mu)
             out.append(cur)  # состояние ПОСЛЕ импульса
+            abs_angles.append(abs_angles[-1])  # тот же абсолютный угол
 
             u_cur = u(cur)
             i += 1
         else:
-            # Обычный шаг по широте
+            # Обычный шаг по широте (продвижение на 'step')
             cur = advance_by_du(cur, step)
             out.append(cur)
+            abs_angles.append(abs_angles[-1] + step)
             u_cur = u(cur)
 
-    return out
+    return out, abs_angles
