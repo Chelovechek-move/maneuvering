@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from maneuvering.maneuvers.maneuver import Maneuver  # dv (в орбитальной СК), angle (рад)
+from maneuvering.maneuvers.maneuver import Maneuver
 from maneuvering.maneuvers.quasi_circular.reference_orbit import (
     TransDevs,
     reference_orbit,
@@ -49,7 +49,7 @@ def coplanar_intersected(devs: TransDevs) -> list[Maneuver]:
     return [man1, man2]
 
 
-def coplanar_non_intersecting(devs: TransDevs) -> list[Maneuver]:
+def coplanar_non_intersecting(devs: TransDevs, ang1: Scalar | None = None) -> list[Maneuver]:
     """
     Рассчитывает манёвры для случая непересекающихся орбит (ΔE ≤ |ΔA|).
 
@@ -80,11 +80,16 @@ def coplanar_non_intersecting(devs: TransDevs) -> list[Maneuver]:
     list[Maneuver]
         Два манёвра с безразмерными dv и углами точки приложения [рад].
     """
-    ang1 = # СЮДА НАДО НАПИСАТЬ КОД ...
+    ang1 = float(np.arctan2(devs.ey, devs.ex)) if ang1 is None else normalize_angle(ang1)
+
+    # СЮДА НАДО НАПИСАТЬ КОД ...
     imp1 = # СЮДА НАДО НАПИСАТЬ КОД ...
     man1 = Maneuver(dv=imp1, angle=ang1)
 
-    imp2 = # СЮДА НАДО НАПИСАТЬ КОД ...
+    dvt2 = # СЮДА НАДО НАПИСАТЬ КОД ...
+    imp2 = np.array([0.0, dvt2, 0.0])
+
+    # СЮДА НАДО НАПИСАТЬ КОД ...
     ang2 = # СЮДА НАДО НАПИСАТЬ КОД ...
     man2 = Maneuver(dv=imp2, angle=ang2)
 
