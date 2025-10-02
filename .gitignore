@@ -16,3 +16,5 @@ htmlcov/
 
 build/
 dist/
+
+examples/.ipynb_checkpoints
