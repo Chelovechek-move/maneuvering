@@ -13,7 +13,7 @@ from maneuvering.types import Scalar
 from maneuvering.utils.math_tools import normalize_angle
 
 
-def coplanar_intersected(devs: TransDevs) -> list[Maneuver]:
+def coplanar_intersecting(devs: TransDevs) -> list[Maneuver]:
     """
     Рассчитывает манёвры для случая пересекающихся орбит (ΔE > |ΔA|).
 
@@ -38,12 +38,12 @@ def coplanar_intersected(devs: TransDevs) -> list[Maneuver]:
     list[Maneuver]
         Два манёвра с безразмерными dv и углами точки приложения [рад].
     """
-    ang1 = # СЮДА НАДО НАПИСАТЬ КОД ...
-    imp1 = # СЮДА НАДО НАПИСАТЬ КОД ...
+    ang1 = float(np.arctan2(devs.ey, devs.ex))
+    imp1 = np.array([0.0, (devs.a + devs.e) / 4.0, 0.0])
     man1 = Maneuver(dv=imp1, angle=ang1)
 
-    ang2 = # СЮДА НАДО НАПИСАТЬ КОД ...
-    imp2 = # СЮДА НАДО НАПИСАТЬ КОД ...
+    ang2 = ang1 + np.pi
+    imp2 = np.array([0.0, (devs.a - devs.e) / 4.0, 0.0])
     man2 = Maneuver(dv=imp2, angle=ang2)
 
     return [man1, man2]
@@ -82,15 +82,18 @@ def coplanar_non_intersecting(devs: TransDevs, ang1: Scalar | None = None) -> li
     """
     ang1 = float(np.arctan2(devs.ey, devs.ex)) if ang1 is None else normalize_angle(ang1)
 
-    # СЮДА НАДО НАПИСАТЬ КОД ...
-    imp1 = # СЮДА НАДО НАПИСАТЬ КОД ...
+    num = devs.e * devs.e - devs.a * devs.a
+    den = devs.ey * np.sin(ang1) + devs.ex * np.cos(ang1) - devs.a
+    dvt1 = (num / den) / 4.0
+    imp1 = np.array([0.0, dvt1, 0.0])
     man1 = Maneuver(dv=imp1, angle=ang1)
 
-    dvt2 = # СЮДА НАДО НАПИСАТЬ КОД ...
+    dvt2 = (devs.a / 2.0) - dvt1
     imp2 = np.array([0.0, dvt2, 0.0])
 
-    # СЮДА НАДО НАПИСАТЬ КОД ...
-    ang2 = # СЮДА НАДО НАПИСАТЬ КОД ...
+    y_arg = (devs.ey / 2.0 - dvt1 * np.sin(ang1)) / dvt2
+    x_arg = (devs.ex / 2.0 - dvt1 * np.cos(ang1)) / dvt2
+    ang2 = float(np.arctan2(y_arg, x_arg))
     man2 = Maneuver(dv=imp2, angle=ang2)
 
     return [man1, man2]
@@ -123,7 +126,7 @@ def solve_coplanar_sys(devs: TransDevs, tol: Scalar = 2.220446049250313e-14) -> 
     is_intersect = devs.e > abs(devs.a)
     if is_coincide:
         return []
-    return coplanar_intersected(devs) if is_intersect else coplanar_non_intersecting(devs)
+    return coplanar_intersecting(devs) if is_intersect else coplanar_non_intersecting(devs)
 
 
 def coplanar_analytical(oi: Kep, ot: Kep, mu: Scalar) -> list[Maneuver]:
