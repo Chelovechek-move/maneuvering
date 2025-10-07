@@ -167,7 +167,7 @@ def coplanar_analytical(oi: Kep, ot: Kep, mu: Scalar) -> list[Maneuver]:
     list[Maneuver]
         Список из 0 или 2 манёвров:
         - dv : Vector3 — импульс в орбитальной СК {r, t, n}, [м/с]
-        - angle : Scalar — истинная широта точки приложения (рад), нормализована в [0, 2π).
+        - angle : Scalar — истинная аномалия точки приложения (рад), нормализована в [0, 2π).
     """
     devs = trans_devs(oi, ot)
     mans = solve_coplanar_sys(devs)
