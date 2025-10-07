@@ -123,7 +123,7 @@ def solve_coplanar_sys(devs: TransDevs, tol: Scalar = 2.220446049250313e-14) -> 
         Список манёвров с безразмерными dv и углами точки приложения [рад].
     """
     is_coincide = (abs(devs.e) < tol) and (abs(devs.a) < tol)
-    is_intersect = devs.e > abs(devs.a)
+    is_intersect = devs.e >= abs(devs.a)
     if is_coincide:
         return []
     return coplanar_intersecting(devs) if is_intersect else coplanar_non_intersecting(devs)
